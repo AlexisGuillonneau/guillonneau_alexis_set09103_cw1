@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{%block head%}
+    {{super()}}
+    <link href="{{ url_for('static', filename='css/movie.css')}}" rel="stylesheet">
+{%endblock%}
+
+
+{% block nav%}
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('movie.index')}}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="{{url_for('movie.display_all_movies')}}">Movies</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+    </li>
+{%endblock%}
+
+
+
+{%block main%}
+    	<div class="container">	
+    		<h1 class="my-4">{{movie[1]}}
+			</h1>
+    		<div class="row">
+    		
+    		<div class="col-lg-4 col-md-6 col-sm-6 portfolio-item">
+	          <div class="card h-100">
+	            <a href="#"><img class="card-img-top" src="{{url_for('static',filename='images/'+movie[11]) }}" alt="" style="max-width:auto;max-height: auto;"></a>
+	            <div class="card-body">
+	              <h5>Year:</h5><p class="card-text"><a href="{{url_for('movie.year',year=movie[6])}}">{{movie[6]|int}}</a></p>
+	              <h5>Length:</h5><p class="card-text">{{movie[5]|int}} minutes</p>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="col-lg-4 col-md-6 col-sm-6">
+	        <div class="card-body">
+	              <blockquote class="blockquote text-center">
+					  <p class="mb-0">{{movie[9]}}</p>
+					  <footer class="blockquote-footer"><cite title="Source Title">IMDb.com</cite></footer>
+					</blockquote>
+	              <!-- <p class="card-text">{{movie[9]}}</p> -->
+	              <h5>Director:</h5><p class="director">
+                   {%set directors = movie[3].split(';')%}
+                    {%for director in directors%}
+                        <a href="{{url_for('movie.director',director=director)}}">{{director}}</a>
+                        {%if not loop.last%}
+                        -
+                        {%endif%}
+                    {%endfor%}   
+                  </p>
+	              <h5>Producer:</h5><p class="producer">
+                   {%set producers = movie[4].split(';')%}
+                    {%for producer in producers%}
+                        <a href="{{url_for('movie.producer',producer=producer)}}">{{producer}}</a>
+                        {%if not loop.last%}
+                        -
+                        {%endif%}
+                    {%endfor%}   
+                  </p>
+	              <h5>Actor:</h5><p class="actor">
+                    {%set actors = movie[7].split(';')%}
+                    {%for a in actors%}
+                        <a href="{{url_for('movie.actor',actor=a)}}">{{a}}</a>
+                        {%if not loop.last%}
+                        -
+                        {%endif%}
+                    {%endfor%}
+                    </p>
+	              <h5>Country:</h5><p class="country">
+                    {%set countries = movie[8].split(';')%}
+                    {%for country in countries%}
+                        <a href="{{url_for('movie.country',country=country)}}">{{country}}</a>
+                        {%if not loop.last%}
+                        -
+                        {%endif%}
+                    {%endfor%}
+                  </p>
+	              <h5>Distribution:</h5><p class="distribution">
+                   {%set distributions = movie[10].split(';')%}
+                    {%for distribution in distributions%}
+                        <a href="{{url_for('movie.distribution',distribution=distribution)}}">{{distribution}}</a>
+                        {%if not loop.last%}
+                        -
+                        {%endif%}
+                    {%endfor%}   
+                  </p>
+	              <h5>
+                    {%set cat_len = movie[2].split(';')%}
+	              	{%if cat_len|length > 1 %}
+	              		Categories:
+	              	{%else%}
+	              		Category:
+	              	{%endif%}
+
+	              </h5><p class="category">
+	              	{%for c in cat_len%}
+	              		<a href="{{url_for('movie.category',category=c)}}">{{c}}</a>
+	              		{%if not loop.last%}
+	              		-
+	              		{%endif%}
+	              	{%endfor%}
+	              </p>
+	            </div>
+	        </div>
+	        
+	</div>
+</div>
+
+    	</div>
+{%endblock%}
